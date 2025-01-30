@@ -1,4 +1,19 @@
+import { notFound } from 'next/navigation';
 import React from 'react'
+
+
+export const daynamicParams =true
+
+export async function generateStaticParams() {
+    const response = await fetch("http://localhost:4000/tickets")
+    const tickets = await response.json()
+
+
+    return tickets.map((ticket) => ({
+        id: ticket.id
+    }));
+}
+
 
 async function getTicket(id) {
     const response = await fetch("http://localhost:4000/tickets/"+id,{
@@ -7,17 +22,15 @@ async function getTicket(id) {
         }
     });
     if (!response.ok) {
-        throw new Error('Failed to fetch tickets');
+       notFound();
     }
     return response.json();
         
 }
 
 export default async function TicketDetails({params}) {
-    const param =await params
-    const id = param.id
     
-    const ticket =await getTicket(id);
+    const ticket =await getTicket(params.id);
   return (
     <main>
         <nav>
