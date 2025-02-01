@@ -2,6 +2,11 @@ import React, { Suspense } from 'react'
 import TicketList from './ticketList'
 import Loading from '../loading'
 
+
+export const metadata = {
+  title: 'Dojo Helpdisk | Tickets',
+}
+
 export default function Tickets() {
   return (
     <main>

@@ -4,6 +4,16 @@ import React from 'react'
 
 export const daynamicParams =true
 
+export async function generateMetadata({params}) {
+    const res = await fetch("http://localhost:4000/tickets/"+params.id);
+    const ticket =await res.json();
+
+    return{
+        title:`Dojo Helpdisk | ${ticket.id}`
+    }
+    
+}
+
 export async function generateStaticParams() {
     const response = await fetch("http://localhost:4000/tickets")
     const tickets = await response.json()
