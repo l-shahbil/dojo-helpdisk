@@ -1,6 +1,12 @@
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+
+//components
 import Navbar from "../components/Navbar";
 
-export default function DashboardLayout({children}) {
+export default async function DashboardLayout({children}) {
+
+
   return (
     <>
         <Navbar />

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import logo from './dojo-logo.png'
 import Image from 'next/image';
 
-export default function Navbar() {
+export default function Navbar({user}) {
   return (
     <nav>
         <Image 

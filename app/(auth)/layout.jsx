@@ -5,7 +5,7 @@ export default function AuthLayout({children}) {
     <>
         <nav>
             <h1>Dojo Helpdisk</h1>
-            <Link href={"/singup"}>Sing Up</Link>
+            <Link href={"/signup"}>Sing Up</Link>
             <Link href={"/login"}>Login</Link>
         </nav>
         {children}
