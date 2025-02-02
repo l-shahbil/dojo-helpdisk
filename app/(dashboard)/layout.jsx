@@ -5,11 +5,12 @@ import { cookies } from "next/headers";
 import Navbar from "../components/Navbar";
 
 export default async function DashboardLayout({children}) {
-
+  const supabase = createServerComponentClient({cookies});
+  const {data} = await supabase.auth.getSession();
 
   return (
     <>
-        <Navbar />
+        <Navbar  user={data.session.user}/>
         {children}
     </>
   )
