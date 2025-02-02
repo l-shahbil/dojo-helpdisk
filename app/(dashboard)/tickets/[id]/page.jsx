@@ -1,40 +1,38 @@
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { notFound } from 'next/navigation';
 import React from 'react'
+import { cookies } from 'next/headers';
 
 
 export const daynamicParams =true
 
 export async function generateMetadata({params}) {
-    const res = await fetch("http://localhost:4000/tickets/"+params.id);
-    const ticket =await res.json();
+    const supabase = createServerComponentClient({cookies})
+
+    const {data:ticket} = await supabase.from("Tickets")
+    .select()
+    .eq("id",params.id)
+    .single()
 
     return{
-        title:`Dojo Helpdisk | ${ticket.id}`
+        title:`Dojo Helpdisk | ${ticket?.title || 'Ticket Not Found'}`
     }
     
 }
 
-export async function generateStaticParams() {
-    const response = await fetch("http://localhost:4000/tickets")
-    const tickets = await response.json()
-
-
-    return tickets.map((ticket) => ({
-        id: ticket.id
-    }));
-}
-
-
 async function getTicket(id) {
-    const response = await fetch("http://localhost:4000/tickets/"+id,{
-        next:{
-            revalidate:30
-        }
-    });
-    if (!response.ok) {
-       notFound();
+    const supabase = createServerComponentClient({cookies})
+
+    const {data} = await supabase.from("Tickets")
+    .select()
+    .eq("id",id)
+    .single()
+
+    if(!data){
+        notFound();
     }
-    return response.json();
+
+    return data;
         
 }
 
