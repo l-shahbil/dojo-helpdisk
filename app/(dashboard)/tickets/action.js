@@ -25,3 +25,18 @@ export async function addTicket(fromData) {
     revalidatePath("/tickets")
     redirect("/tickets")
 }
+
+export async function deleteTicket(id) {
+    const supabase = createServerActionClient({ cookies });
+
+    const { error } = await supabase.from("Tickets")
+        .delete()
+        .eq("id", id)
+
+    if (error) {
+        throw new Error("Could not delete the ticket")
+    }
+
+    revalidatePath("/tickets")
+    redirect("/tickets")
+}
