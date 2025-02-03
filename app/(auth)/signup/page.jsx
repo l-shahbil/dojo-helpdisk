@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function Signup() {
   const router = useRouter();
   const [error,setError] = useState('');
+  const url = process.env.LOCATION_ORIGIN
 
   const handleSubmit =async (e,email,password)=>{
     e.preventDefault();
@@ -17,7 +18,7 @@ export default function Signup() {
     email,
     password,
     options:{
-      emailRedirectTo:`${location.origin}/api/auth/callback`
+      emailRedirectTo:`${url}/api/auth/callback`
     }
   })
 
