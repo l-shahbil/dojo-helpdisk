@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import TicketList from './ticketList'
 import Loading from '../loading'
+import Link from 'next/link'
 
 
 export const metadata = {
