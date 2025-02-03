@@ -1,13 +1,27 @@
 "use client"
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import {TiDelete} from 'react-icons/ti'
 
 export default function DeleteButton({id}) {
+    const router = useRouter()
     const [isLoading,setIsLoading] = useState(false);
 
     const handleClick = async()=>{
         setIsLoading(true)
-        console.log('delete id ',id)
+        
+        const res = await fetch(`http://localhost:3000/api/tickets/${id}`,{
+            method:"DELETE"
+        });
+
+        const json = await res.json();
+        if(json.error){
+            setIsLoading(false)
+        }
+        if(!json.error){
+            router.refresh();
+            router.push("/tickets")
+        }
     }
 
   return (
